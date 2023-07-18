@@ -1,3 +1,6 @@
+using mlbd_logistic_management.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,6 +19,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+builder.Services.AddDbContext<MlbdLogisticManagementContext>(options => {
+    options.UseMySQL(builder.Configuration.GetConnectionString("mlbd_logistic_management"));
+    Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql");
+});
+    
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
