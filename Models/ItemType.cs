@@ -1,15 +1,17 @@
 namespace mlbd_logistics_management.Models;
 
-public class Item 
+public class ItemType
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public int ItemTypeId { get; set; }
-    public ItemType ItemType { get; set; }
-    public int Quantity { get; set; }
-    public bool IsAssignable { get; set; }
+
+    // Foreign key relationship with the Department table
+    public int DepartmentId { get; set; }
+    public Department Department { get; set; }
+
+    // Soft delete properties
+    public bool IsDeleted { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
-
 }

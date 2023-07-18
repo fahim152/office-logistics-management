@@ -1,15 +1,14 @@
 namespace mlbd_logistics_management.Models;
 
-public class Item 
+public class User
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public int ItemTypeId { get; set; }
-    public ItemType ItemType { get; set; }
-    public int Quantity { get; set; }
-    public bool IsAssignable { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+    public string Address { get; set; }
+    public string Type { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
-
 }

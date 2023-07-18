@@ -2,6 +2,7 @@
 
 using System;
 using Microsoft.EntityFrameworkCore;
+using mlbd_logistics_management.Models;
 
 public partial class MlbdLogisticManagementContext : DbContext
 {
@@ -14,7 +15,9 @@ public partial class MlbdLogisticManagementContext : DbContext
     {
     }
 
-   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public DbSet<Department> Departments { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
         {
