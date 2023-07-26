@@ -4,7 +4,7 @@ using mlbd_logistics_management.Services;
 namespace mlbd_logistics_management.Controllers;
 
 [ApiController]
-[Route("api/item ")]
+[Route("api/item")]
 public class ItemController : ControllerBase
 {
     private static readonly string[] Summaries = new[]

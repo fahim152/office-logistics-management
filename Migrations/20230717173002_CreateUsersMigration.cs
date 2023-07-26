@@ -16,15 +16,15 @@ namespace mlbd_logistics_management.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                               .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                               .Annotation("SqlServer:Identity", "1, 1"), // Use "SqlServer:Identity" instead of "MySql:ValueGenerationStrategy" for identity column
                     Name = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: true),
                     Type = table.Column<string>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(precision: 0, nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    UpdatedAt = table.Column<DateTime>(precision: 0, nullable: true, defaultValueSql: "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
-                    DeletedAt = table.Column<DateTime>(precision: 0, nullable: true)
+                    CreatedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdatedAt = table.Column<DateTime>(nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"), // SQL Server does not support "ON UPDATE" option, so the default value will be set on insert only
+                    DeletedAt = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -36,7 +36,7 @@ namespace mlbd_logistics_management.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                        name: "Users");
+                name: "Users");
         }
     }
 }

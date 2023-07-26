@@ -12,8 +12,7 @@ builder.Services.AddSwaggerGen();
 
 // Register DbContext
 builder.Services.AddDbContext<MlbdLogisticManagementContext>(options => {
-    options.UseMySQL(builder.Configuration.GetConnectionString("mlbd_logistic_management"));
-    Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql");
+    options.UseSqlServer(builder.Configuration.GetConnectionString("mlbd_logistic_management"));
 });
 
 // Register DepartmentService

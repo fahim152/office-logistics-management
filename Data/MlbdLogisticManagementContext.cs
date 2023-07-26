@@ -17,20 +17,20 @@ public partial class MlbdLogisticManagementContext : DbContext
 
     public DbSet<Department> Departments { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json")
-                .Build();
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     if (!optionsBuilder.IsConfigured)
+    //     {
+    //         IConfigurationRoot configuration = new ConfigurationBuilder()
+    //             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+    //             .AddJsonFile("appsettings.json")
+    //             .Build();
 
-            string connectionString = configuration.GetConnectionString("mlbd_logistic_management");
+    //         string connectionString = configuration.GetConnectionString("mlbd_logistic_management");
 
-            optionsBuilder.UseMySql(connectionString, Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"));
-        }
-    }
+    //         optionsBuilder.UseMySql(connectionString, Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"));
+    //     }
+    // }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder

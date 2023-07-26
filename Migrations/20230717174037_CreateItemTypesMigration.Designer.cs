@@ -18,11 +18,48 @@ namespace mlbd_logistics_management.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseCollation("utf8mb4_0900_ai_ci")
                 .HasAnnotation("ProductVersion", "7.0.9")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128); // Use 128 instead of 64 for SQL Server
 
-            MySqlModelBuilderExtensions.HasCharSet(modelBuilder, "utf8mb4");
+            modelBuilder.Entity("mlbd_logistics_management.ItemType", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .UseIdentityColumn(); // Use UseIdentityColumn() instead of UseMySqlIdentityColumn() for SQL Server
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<int>("DepartmentId")
+                    .HasColumnType("int");
+
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
+
+                b.Property<DateTime>("DeletedAt")
+                    .HasColumnType("datetime2");
+
+                b.HasKey("Id");
+
+                b.HasIndex("DepartmentId");
+
+                b.ToTable("ItemTypes"); // Use "ItemTypes" instead of "ItemType" for table name
+            });
+
+            modelBuilder.Entity("mlbd_logistics_management.ItemType", b =>
+            {
+                b.HasOne("mlbd_logistics_management.Department", "Department")
+                    .WithMany("ItemTypes")
+                    .HasForeignKey("DepartmentId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
 #pragma warning restore 612, 618
         }
     }

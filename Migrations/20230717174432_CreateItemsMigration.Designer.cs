@@ -18,11 +18,54 @@ namespace mlbd_logistics_management.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseCollation("utf8mb4_0900_ai_ci")
                 .HasAnnotation("ProductVersion", "7.0.9")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128); // Use 128 instead of 64 for SQL Server
 
-            MySqlModelBuilderExtensions.HasCharSet(modelBuilder, "utf8mb4");
+            modelBuilder.Entity("mlbd_logistics_management.Item", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .UseIdentityColumn(); // Use UseIdentityColumn() instead of UseMySqlIdentityColumn() for SQL Server
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<int>("ItemTypeId")
+                    .HasColumnType("int");
+
+                b.Property<int>("Quantity")
+                    .HasColumnType("int");
+
+                b.Property<bool>("IsAssignable")
+                    .HasColumnType("bit");
+
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
+
+                b.Property<DateTime>("DeletedAt")
+                    .HasColumnType("datetime2");
+
+                b.HasKey("Id");
+
+                b.HasIndex("ItemTypeId");
+
+                b.ToTable("Items"); // Use "Items" instead of "Item" for table name
+            });
+
+            modelBuilder.Entity("mlbd_logistics_management.Item", b =>
+            {
+                b.HasOne("mlbd_logistics_management.ItemType", "ItemType")
+                    .WithMany("Items")
+                    .HasForeignKey("ItemTypeId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
 #pragma warning restore 612, 618
         }
     }

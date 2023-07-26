@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: mysql123@
+      ACCEPT_EULA: Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    mem_limit: 2g
+
+volumes:
+  sqlserver_data:
+    driver: local
+
