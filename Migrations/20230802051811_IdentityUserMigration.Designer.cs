@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mlbd_logistic_management.Data;
 
@@ -11,9 +12,11 @@ using mlbd_logistic_management.Data;
 namespace mlbd_logistics_management.Migrations
 {
     [DbContext(typeof(MlbdLogisticManagementContext))]
-    partial class MlbdLogisticManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20230802051811_IdentityUserMigration")]
+    partial class IdentityUserMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

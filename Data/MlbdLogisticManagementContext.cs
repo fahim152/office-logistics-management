@@ -16,7 +16,9 @@ public partial class MlbdLogisticManagementContext : DbContext
     }
 
     public DbSet<Department> Departments { get; set; }
-
+    public DbSet<ItemType> ItemTypes { get; set; }
+    public DbSet<Item> Items { get; set; }
+    public DbSet<User> Users { get; set; }
     // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     // {
     //     if (!optionsBuilder.IsConfigured)

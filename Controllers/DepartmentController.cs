@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using mlbd_logistics_management.Models;
@@ -6,7 +8,8 @@ using mlbd_logistics_management.Services;
 namespace mlbd_logistics_management.Controllers;
 
 [ApiController]
-[Route("api/{controller}")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Route("api/department")]
 public class DepartmentController : ControllerBase
 {
     private DepartmentService _departmentService;
@@ -16,7 +19,7 @@ public class DepartmentController : ControllerBase
         this._departmentService = departmentService;
     }
 
-    // GET: api/Department
+    // GET: api/department
     [HttpGet]
     public ActionResult<IEnumerable<Department>> GetDepartments()
     {
@@ -37,10 +40,11 @@ public class DepartmentController : ControllerBase
         return Ok(department);
     }
 
-    // POST: api/Department
+    // POST: api/department
     [HttpPost]
     public ActionResult<Department> CreateDepartment(Department department)
     {
+        
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
@@ -50,18 +54,13 @@ public class DepartmentController : ControllerBase
         return CreatedAtAction(nameof(GetDepartmentById), new { id = department.Id }, department);
     }
 
-    // PUT: api/Department/5
+    // PUT: api/department/5
     [HttpPut("{id}")]
     public IActionResult UpdateDepartment(int id, Department department)
     {
         if (id != department.Id)
         {
             return BadRequest();
-        }
-
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
         }
 
         try
