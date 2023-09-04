@@ -10,4 +10,5 @@ public class Department
     public string Name { get; set; }
     public string OfficeName { get; set; }
 
+     public ICollection<ItemType> ItemTypes { get; }
 }

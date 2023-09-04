@@ -12,10 +12,10 @@ namespace mlbd_logistics_management.Models;
 
     // Foreign key relationship with the Department table
     public int DepartmentId { get; set; }
-
-  [Display(Name = "DepartmentErNam")]
+    
     public Department? Department { get; set; }
 
+    public ICollection<Item>? Items { get; }
     // Soft delete properties
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

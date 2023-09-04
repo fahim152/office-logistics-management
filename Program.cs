@@ -7,6 +7,8 @@ using System.Text;
 using mlbd_logistics_management.Models;
 using Microsoft.AspNetCore.Identity;
 using mlbd_logistics_management.Utils;
+using mlbd_logistics_management.Services.Interfaces;
+using mlbd_logistic_management.Services.EmailSender;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,11 +31,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// Registering email service
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 // Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Register DbContext
 builder.Services.AddDbContext<MlbdLogisticManagementContext>(options => {
@@ -47,6 +52,8 @@ builder.Services.AddIdentity<User, IdentityRole>(options => {
 .AddDefaultTokenProviders();
 
 // Register Services
+builder.Services.AddScoped<IPaginationService, PaginationService>();
+builder.Services.AddScoped<EmailSender>();
 builder.Services.AddScoped<DepartmentService>();
 builder.Services.AddScoped<ItemTypeService>();
 builder.Services.AddScoped<ItemService>();
