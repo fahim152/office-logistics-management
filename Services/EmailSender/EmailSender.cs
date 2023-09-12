@@ -9,8 +9,8 @@ namespace mlbd_logistic_management.Services.EmailSender
     {
        public Task SendEmailAsync(string email, string subject, string body)
        {
-            var mail = "smritychaity@gmail.com";
-            var pw = "Hello152@";
+            var mail = ""; 
+            var pw = "";
 
             var client = new SmtpClient("smtp.gmail.com", 587)
             {

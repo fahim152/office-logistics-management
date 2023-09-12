@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using mlbd_logistic_management.Data;
 using mlbd_logistic_management.Services.EmailSender;
@@ -25,8 +20,7 @@ namespace mlbd_logistics_management.Services
 
         public Task<PaginatedList<Item>> GetAllItems(int pageNumber, int pageSize)
         {
-            var query = _context.Items.AsQueryable(); // Replace with your data source
-            
+            var query = _context.Items.AsQueryable();
             return _paginationService.PaginateAsync(query, pageNumber, pageSize);
         }
 

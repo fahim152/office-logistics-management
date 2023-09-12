@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using mlbd_logistic_management.Services.EmailSender;
 using mlbd_logistics_management.Models;
 using mlbd_logistics_management.Services;
+using mlbd_logistics_management.ViewModels.OutgoingRequests;
+using mlbd_logistics_management.ViewModels.IncomingRequests;
 using mlbd_logistics_management.ViewModels;
 
 namespace mlbd_logistics_management.Controllers
@@ -22,9 +24,9 @@ namespace mlbd_logistics_management.Controllers
 
         // GET: api/item
        [HttpGet]
-        public async Task<PaginatedList<ItemViewModel>> GetItems([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20)
+        public async Task<PaginatedList<ItemViewModel>> GetItems([FromQuery] ItemIndexRequestDto indexRequestDto)
         {
-            var items = await _itemService.GetAllItems(pageNumber, pageSize);
+            var items = await _itemService.GetAllItems(indexRequestDto.PageNumber, indexRequestDto.PageSize);
 
             var mappedItems = _mapper.Map<PaginatedList<Item>, PaginatedList<ItemViewModel>>(items);
             

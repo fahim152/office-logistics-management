@@ -1,6 +1,6 @@
 using mlbd_logistics_management.Models;
 
-namespace mlbd_logistics_management.ViewModels;
+namespace mlbd_logistics_management.ViewModels.OutgoingRequests;
 
 public class ItemViewModel  
 {

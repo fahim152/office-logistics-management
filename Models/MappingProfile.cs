@@ -1,6 +1,7 @@
 using AutoMapper;
 using mlbd_logistics_management.Utils;
 using mlbd_logistics_management.ViewModels;
+using mlbd_logistics_management.ViewModels.OutgoingRequests;
 
 namespace mlbd_logistics_management.Models
 {
