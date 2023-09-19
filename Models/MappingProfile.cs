@@ -12,6 +12,9 @@ namespace mlbd_logistics_management.Models
         {
            CreateMap<Item, ItemViewModel>();
            CreateMap<PaginatedList<Item>, PaginatedList<ItemViewModel>>().ConvertUsing<PaginatedListConverter<Item, ItemViewModel>>();
+
+           CreateMap<ItemType, ItemTypeViewModel>();
+           CreateMap<PaginatedList<ItemType>, PaginatedList<ItemTypeViewModel>>().ConvertUsing<PaginatedListConverter<ItemType, ItemTypeViewModel>>();
         }
     }
 }

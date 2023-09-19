@@ -6,6 +6,9 @@ using mlbd_logistics_management.Services;
 using mlbd_logistics_management.ViewModels.OutgoingRequests;
 using mlbd_logistics_management.ViewModels.IncomingRequests;
 using mlbd_logistics_management.ViewModels;
+using System.Globalization;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace mlbd_logistics_management.Controllers
 {
@@ -15,11 +18,13 @@ namespace mlbd_logistics_management.Controllers
     {
         private readonly ItemService _itemService;
         private readonly IMapper _mapper;
+        private readonly HttpClient _client;
 
-        public ItemController(ItemService itemService, IMapper mapper)
+        public ItemController(ItemService itemService, IMapper mapper, HttpClient client)
         {
             _itemService = itemService;
             _mapper = mapper;
+            _client = client;
         }
 
         // GET: api/item
@@ -95,5 +100,34 @@ namespace mlbd_logistics_management.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("random")]
+        public async Task<IActionResult> RandomItems()
+        {
+            var address = "https://api.chucknorris.io/jokes/random";
+
+            HttpResponseMessage response = await _client.GetAsync(address);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = await response.Content.ReadAsStringAsync();
+                // parsing from stringify json to string
+                JsonDocument doc = JsonDocument.Parse(data);
+
+                // accessing the array
+                string value = doc.RootElement.GetProperty("value").ToString();
+
+                // create a custom view model for your retrieved object
+                ItemViewModel item = new ItemViewModel
+                {
+                    Name = value
+                };
+
+                return Ok(data);
+            }   
+            return NoContent();
+        }
+
     }
+
 }

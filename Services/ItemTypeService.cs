@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using mlbd_logistic_management.Data;
 using mlbd_logistics_management.Models;
+using mlbd_logistics_management.ViewModels;
 
 namespace mlbd_logistics_management.Services
 {
@@ -9,14 +10,18 @@ namespace mlbd_logistics_management.Services
     {
         private readonly MlbdLogisticManagementContext _context;
 
-        public ItemTypeService(MlbdLogisticManagementContext context)
+        private readonly IPaginationService _paginationService;
+
+        public ItemTypeService(MlbdLogisticManagementContext context, IPaginationService paginationService)
         {
             _context = context;
+            _paginationService = paginationService;
         }
 
-        public List<ItemType> GetAllItemTypes()
+        public Task<PaginatedList<ItemType>> GetAllItems(int pageNumber, int pageSize)
         {
-            return _context.ItemTypes.ToList();
+            var query = _context.ItemTypes.AsQueryable();
+            return _paginationService.PaginateAsync(query, pageNumber, pageSize);
         }
 
         public ItemType GetItemTypeById(int id)

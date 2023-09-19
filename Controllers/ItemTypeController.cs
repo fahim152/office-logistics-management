@@ -1,7 +1,11 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using mlbd_logistic_management.Data;
 using mlbd_logistics_management.Models;
 using mlbd_logistics_management.Services;
+using mlbd_logistics_management.ViewModels;
+using mlbd_logistics_management.ViewModels.IncomingRequests;
+using mlbd_logistics_management.ViewModels.OutgoingRequests;
 
 namespace mlbd_logistics_management.Controllers
 {
@@ -11,19 +15,23 @@ namespace mlbd_logistics_management.Controllers
     {
         private readonly ItemTypeService _itemTypeService;
         private readonly MlbdLogisticManagementContext _context;
-
-        public ItemTypeController(ItemTypeService itemTypeService, MlbdLogisticManagementContext context)
+         private readonly IMapper _mapper;
+        public ItemTypeController(ItemTypeService itemTypeService, MlbdLogisticManagementContext context, IMapper mapper)
         {
-            this._itemTypeService = itemTypeService;
-            this._context = context;
+            _itemTypeService = itemTypeService;
+            _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/item-type
-        [HttpGet]
-        public IActionResult GetItemTypes()
+         [HttpGet]
+        public async Task<PaginatedList<ItemTypeViewModel>> GetItems([FromQuery] ItemIndexTypeRequestDto indexTypeRequestDto)
         {
-            var itemTypes = _itemTypeService.GetAllItemTypes();
-            return Ok(itemTypes);
+            var items = await _itemTypeService.GetAllItems(indexTypeRequestDto.PageNumber, indexTypeRequestDto.PageSize);
+
+            var mappedItems = _mapper.Map<PaginatedList<ItemType>, PaginatedList<ItemTypeViewModel>>(items);
+            
+            return mappedItems;
         }
 
         // GET: api/item-type/5
